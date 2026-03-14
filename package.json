@@ -1,0 +1,15 @@
+{
+  "name": "previsaomart-site",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test",
+    "test:e2e": "playwright test",
+    "test:all": "npm run test && npm run test:e2e"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.52.0",
+    "dayjs": "^1.11.13"
+  }
+}

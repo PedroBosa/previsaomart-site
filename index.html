@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PrevisaoMart</title>
+    <meta
+      name="description"
+      content="Previsao de demanda no varejo com dados reais e analise executiva."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./src/styles/main.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.13/dayjs.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.13/plugin/customParseFormat.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.13/plugin/utc.js" defer></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/xlsx.full.min.js"
+      onerror="this.onerror=null;this.src='https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js'"
+      defer
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@3.1.6/dist/purify.min.js" defer></script>
+    <script type="module" src="./src/scripts/app.js"></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">
+        <h1>PrevisaoMart</h1>
+        <p>Previsao de demanda para analise executiva | Grupo: Topico 6</p>
+      </div>
+      <div class="actions">
+        <input id="fileInput" type="file" accept=".csv,.xlsx,.xls" />
+        <label class="inline-field" for="storeSelect">
+          Loja
+          <select id="storeSelect">
+            <option value="">Todas</option>
+          </select>
+        </label>
+        <label class="inline-field" for="categorySelect">
+          Categoria
+          <select id="categorySelect">
+            <option value="">Todas</option>
+          </select>
+        </label>
+        <label class="inline-field" for="testSizeSelect">
+          Teste
+          <select id="testSizeSelect">
+            <option value="12">12 meses</option>
+            <option value="18">18 meses</option>
+            <option value="24" selected>24 meses</option>
+            <option value="36">36 meses</option>
+          </select>
+        </label>
+        <button id="runBtn" type="button">Executar analise</button>
+        <button id="printBtn" type="button">Exportar relatorio</button>
+      </div>
+    </header>
+
+    <main class="layout">
+      <nav class="sidebar" aria-label="Navegacao principal">
+        <button class="tab is-active" data-tab="executivo">Visao Executiva</button>
+        <button class="tab" data-tab="dados">Dados e Qualidade</button>
+        <button class="tab" data-tab="modelagem">Modelagem</button>
+        <button class="tab" data-tab="resultados">Resultados</button>
+        <button class="tab" data-tab="conclusoes">Conclusoes</button>
+      </nav>
+
+      <section class="content">
+        <div id="alerts"></div>
+
+        <article class="panel is-active" data-panel="executivo">
+          <h2>Visao Executiva</h2>
+          <div id="kpis" class="grid cards"></div>
+        </article>
+
+        <article class="panel" data-panel="dados">
+          <h2>Dados e Qualidade</h2>
+          <div class="chart-grid chart-grid-2">
+            <div class="chart-wrap"><canvas id="historicalChart"></canvas></div>
+            <div class="chart-wrap"><canvas id="seasonalityChart"></canvas></div>
+          </div>
+          <div id="dataSummary"></div>
+        </article>
+
+        <article class="panel" data-panel="modelagem">
+          <h2>Modelagem</h2>
+          <div id="runStatus" class="section"></div>
+          <div id="modelSummary"></div>
+        </article>
+
+        <article class="panel" data-panel="resultados">
+          <h2>Resultados</h2>
+          <div class="chart-wrap"><canvas id="forecastChart"></canvas></div>
+          <div class="chart-grid chart-grid-2">
+            <div class="chart-wrap"><canvas id="errorChart"></canvas></div>
+            <div class="chart-wrap"><canvas id="mapeChart"></canvas></div>
+          </div>
+          <div id="resultsTable"></div>
+        </article>
+
+        <article class="panel" data-panel="conclusoes">
+          <h2>Conclusoes</h2>
+          <div id="reportMeta" class="section"></div>
+          <div id="conclusion"></div>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>
